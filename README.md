@@ -10,3 +10,6 @@
 - Disfrutá 😎
 
 Si queres usar solamente Vimeo, no hace falta que instales FFmpeg
+
+Los videos descargados van a estar en "/src/uploads"
+No descargues mas de un video sin antes quitar de la carpeta "/uploads" el video anterior (sino se sobreescribirá el video anterior)
