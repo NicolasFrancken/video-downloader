@@ -2,7 +2,7 @@ import https from "https";
 import fs from "fs";
 import path from "path";
 
-export default async function vimeoDownload(configLink) {
+export default async function vimeoDownload(configLink, quality) {
   const videoConfig = await new Promise((resolve, reject) => {
     https.get(configLink, (page) => {
       let result = "";
@@ -20,8 +20,18 @@ export default async function vimeoDownload(configLink) {
 
   const videoQualityItems = videoConfig.request.files.progressive;
 
-  const targetItem = videoQualityItems[3];
-  const targetVideoFileUrl = targetItem.url;
+  const desiredQuality = quality;
+  const videoWithDesiredQuality = videoQualityItems.find(
+    (videoQuality) => videoQuality.quality === desiredQuality
+  );
+
+  let targetVideoFileUrl;
+  if (videoWithDesiredQuality) {
+    targetVideoFileUrl = videoWithDesiredQuality.url;
+  } else {
+    throw e;
+  }
+
   const output = path.join(
     __dirname,
     "../../../../../src/uploads/VimeoVideo.mp4"
@@ -35,6 +45,7 @@ export default async function vimeoDownload(configLink) {
         reject();
       });
       vid.on("end", () => {
+        console.log("Video downloaded");
         resolve();
       });
     });

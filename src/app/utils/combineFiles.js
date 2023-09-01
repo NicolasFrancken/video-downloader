@@ -46,7 +46,7 @@ export default async function combineFiles() {
         resolve();
       })
       .on("error", (e) => {
-        console.error("There was an error trying to combine files");
+        console.error("Error while trying to combine files");
         reject();
       });
 

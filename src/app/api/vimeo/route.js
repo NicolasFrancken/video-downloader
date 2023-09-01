@@ -3,19 +3,25 @@ import { NextResponse } from "next/server";
 import vimeoDownload from "@/app/utils/vimeoDownload";
 
 export async function POST(req) {
-  // 409999884 ESTE ANDA
+  const { url, quality } = await req.json();
 
-  const { url } = await req.json();
-  const videoId = url.match(/\d+/g);
-  const configLink = `https://player.vimeo.com/video/${videoId[0]}/config`;
-
+  let configLink;
   try {
-    await vimeoDownload(configLink);
+    const videoId = url.match(/\d+/g);
+    configLink = `https://player.vimeo.com/video/${videoId[0]}/config`;
+  } catch (e) {
+    return NextResponse.json(
+      { message: "There was an error, please try again" },
+      { status: 500 }
+    );
+  }
+  try {
+    await vimeoDownload(configLink, quality);
 
     return NextResponse.json({ message: "Video downloaded" });
   } catch (e) {
     return NextResponse.json(
-      { message: "There was an error" },
+      { message: "There was an error, please try again" },
       { status: 500 }
     );
   }
