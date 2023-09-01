@@ -1,4 +1,4 @@
-## Tutorial ->
+## Tutorial
 
 - Descargá el repositorio
 - Seguí este corto tutorial para instalar FFmpeg: https://es.wikihow.com/instalar-FFmpeg-en-Windows
